@@ -48,7 +48,13 @@ const goBack = () => {
         </div>
       </header>
       <main class="h-full p-5">
-        <div class="message">안녕하세요</div>
+        <div class="flex flex-col gap-4">
+          <div class="message me">안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 </div>
+          <div class="message">안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 </div>
+          <div class="message">안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 </div>
+          <div class="message me">안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 </div>
+          <div class="message">안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 안녕하세요 </div>
+        </div>
       </main>
     </div>
   </div>
@@ -59,7 +65,10 @@ const goBack = () => {
   background-color: #1a1a1a;
   border-radius: 8px;
   width: fit-content;
+  max-width: 400px;
   padding: 10px;
-
+}
+.message.me {
+  align-self: end;
 }
 </style>

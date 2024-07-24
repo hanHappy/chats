@@ -1,8 +1,9 @@
-package chats;
+package chats.chatmessage;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +15,8 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Message {
+@Builder
+public class ChatMessage {
 
     @Id
     private Long id;
