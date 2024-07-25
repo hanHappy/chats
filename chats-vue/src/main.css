@@ -1,3 +1,69 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.color-1 {
+  color: #1a1a1a;
+}
+
+.color-2 {
+  color: #979797;
+}
+
+.color-2.hover:hover {
+  color: #767676;
+}
+
+.color-3 {
+  color: #40D393;
+}
+
+.color-4 {
+  color: #223547;
+}
+
+.bg-1 {
+  background-color: #1a1a1a;
+}
+
+.bg-2 {
+  background-color: #979797;
+}
+
+.bg-3 {
+  background-color: #40D393;
+}
+
+.bg-4 {
+  background-color: #223547;
+}
+
+.bg-5 {
+  background-color: #ffffff20;
+}
+
+.bg-5.hover:hover {
+  background-color: #ffffff18;
+}
+
+input {
+  @apply bg-5 color-2 placeholder-gray-500 rounded-lg h-10 px-2;
+}
+
+input::placeholder {
+  @apply text-[#ffffff24];
+}
+
+input:focus {
+  @apply outline-none
+}
+
+button,
+.button {
+  @apply bg-3 color-4 px-3 h-10 rounded-lg font-bold flex items-center justify-center;
+}
+
+button:hover,
+.button:hover {
+  @apply bg-[#32be81];
+}

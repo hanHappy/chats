@@ -1,11 +1,15 @@
 <script setup>
 import {onMounted, ref} from "vue";
 
+onMounted(() => {
+  fetchChatRooms()
+});
+
 const chatRooms = ref([]);
 
 const fetchChatRooms = async () => {
   try {
-    const response = await fetch('http://localhost:8080/api/chatrooms');
+    const response = await fetch('http://localhost:8080/api/chat/rooms');
     if (!response.ok) {
       throw new Error('오류 발생');
     }
@@ -15,54 +19,27 @@ const fetchChatRooms = async () => {
   }
 }
 
-onMounted(() => {
-  fetchChatRooms()
-});
 </script>
 <template>
-  <main>
-    <div class="container h-screen mx-auto py-32  max-w-lg max-h-screen">
-      <div class="overflow-y-auto h-full no-scrollbar">
-        <div class="sticky top-0 bg-[#1a1a1a] pb-4">
-          <h1 class="mx-auto text-4xl text-[#979797] font-black text-center">
-            해피 서버
-          </h1>
-          <div class="mt-10 flex items-center justify-end">
-            <RouterLink
-                to="/chats"
-                class="bg-[#40D393] text-[#223547] w-fit py-2 px-3 rounded-lg font-bold hover:bg-[#32be81]"
-            >
-              채팅방 만들기
-            </RouterLink>
-          </div>
-        </div>
-        <div>
-          <ul class="mx-auto">
-            <li v-for="room in chatRooms">{{ room.name }}</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-            <li>채팅방</li>
-          </ul>
-        </div>
-      </div>
+  <div class="sticky top-0 pt-4 z-10 bg-[#1a1a1a]">
+    <div class="flex items-center justify-end">
+      <RouterLink to="/create-chatroom" class="button">채팅방 만들기</RouterLink>
     </div>
-  </main>
+  </div>
+  <div>
+    <ul class="mx-auto mt-4">
+      <li v-for="room in chatRooms" :key="room.id" class="bg-5 hover">
+        <RouterLink :to="{ name: 'ChatRoom', params: { id: room.id } }"
+                    class="color-2 w-full h-full p-4 block">
+          <span class="color-1 font-bold mr-2">채팅방</span> {{ room.name }}
+        </RouterLink>
+      </li>
+    </ul>
+  </div>
 </template>
 <style scoped>
 li {
-  color: #979797;
-  background-color: #ffffff20;
   border-radius: 8px;
-  padding: 16px;
   cursor: pointer;
 }
 
@@ -70,16 +47,4 @@ li:nth-child(n+2) {
   margin-top: 8px;
 }
 
-li:hover {
-  background-color: #ffffff18;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
-}
 </style>

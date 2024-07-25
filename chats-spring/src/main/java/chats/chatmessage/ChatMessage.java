@@ -20,8 +20,8 @@ public class ChatMessage {
 
     @Id
     private Long id;
-    private Long roomId;
-    private Long senderId;
-    private String message;
+    private String roomId;
+    private String senderId;
+    private String content;
 
 }
