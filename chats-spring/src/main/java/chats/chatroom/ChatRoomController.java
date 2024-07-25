@@ -1,6 +1,5 @@
 package chats.chatroom;
 
-import chats.chatroom.ChatRoomService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("chatrooms")
+@RequestMapping("api/chatrooms")
 @RequiredArgsConstructor
 @Slf4j
 public class ChatRoomController {
@@ -23,6 +22,9 @@ public class ChatRoomController {
     @GetMapping
     public ResponseEntity<List<ChatRoom>> getAllChatRooms() {
         List<ChatRoom> chatRooms = chatRoomService.getAllChatRooms();
+
+        log.info("[GET] getAllChatRooms : {}", chatRooms);
+
         return ResponseEntity.ok(chatRooms);
     }
 
