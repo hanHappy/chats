@@ -1,50 +1,40 @@
 <script setup>
-import {onMounted, ref} from "vue";
 
-onMounted(() => {
-  fetchChatRooms()
-});
+import {ref} from "vue";
+import {useUser} from "@/composables/useUser.js";
+import {useRouter} from "vue-router";
 
-const chatRooms = ref([]);
+const router = useRouter();
 
-const fetchChatRooms = async () => {
-  try {
-    const response = await fetch('http://localhost:8080/api/chat/rooms');
-    if (!response.ok) {
-      throw new Error('오류 발생');
-    }
-    chatRooms.value = await response.json();
-  } catch (err) {
-    console.log(err);
+const userId = ref();
+
+const enter = () => {
+  if (!userId) {
+    return;
   }
-}
 
+  useUser().setUser(userId);
+  router.push({name : 'ChatRooms'})
+}
 </script>
-<template>
-  <div class="sticky top-0 pt-4 z-10 bg-[#1a1a1a]">
-    <div class="flex items-center justify-end">
-      <RouterLink to="/create-chatroom" class="button">채팅방 만들기</RouterLink>
-    </div>
-  </div>
-  <div>
-    <ul class="mx-auto mt-4">
-      <li v-for="room in chatRooms" :key="room.id" class="bg-5 hover">
-        <RouterLink :to="{ name: 'ChatRoom', params: { id: room.id } }"
-                    class="color-2 w-full h-full p-4 block">
-          <span class="color-1 font-bold mr-2">채팅방</span> {{ room.name }}
-        </RouterLink>
-      </li>
-    </ul>
-  </div>
-</template>
-<style scoped>
-li {
-  border-radius: 8px;
-  cursor: pointer;
-}
 
-li:nth-child(n+2) {
-  margin-top: 8px;
-}
+<template>
+  <main>
+    <div class="container max-h-screen py-40 mx-auto max-w-lg">
+      <h1 class="color-2 font-black text-5xl text-center">금지된 사람들</h1>
+      <div class="mt-14">
+        <label>
+          <span class="color-2">이름</span>
+          <input type="text" class="w-full mt-2" v-model.trim="userId" @keyup.enter="enter">
+        </label>
+      </div>
+      <div class="mt-6">
+        <button class="w-full" @click="enter">입장</button>
+      </div>
+    </div>
+  </main>
+</template>
+
+<style scoped>
 
 </style>

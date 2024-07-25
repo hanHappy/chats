@@ -1,11 +1,18 @@
 <script setup>
 import {useRoute} from "vue-router";
 import {inject, nextTick, ref} from "vue";
+import {useUser} from "@/composables/useUser.js";
+
+/**
+ * nextTick()
+ * DOM 업데이트 발생을 감지
+ * https://ko.vuejs.org/api/general.html#nexttick
+ */
 
 const route = useRoute();
 const roomId = route.params.id;
 
-const myId = '한상민';
+const myId = useUser().userId.value;
 
 const messages = ref([]);
 

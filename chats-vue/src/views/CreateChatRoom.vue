@@ -28,9 +28,8 @@ const createChatRoom = async () => {
     }
 
     const result = await response.json();
-    await router.push({name : 'Home'})
+    await router.push({name : 'ChatRoom', params : {id : result.id}})
 
-    console.log(result)
   } catch (error) {
     console.error('Error:', error);
   }

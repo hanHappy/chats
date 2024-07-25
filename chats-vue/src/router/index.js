@@ -6,20 +6,25 @@ const router = createRouter({
   routes : [
     {
       path : "/",
+      name : "Home",
+      component : () => import("../views/Home.vue"),
+    },
+    {
+      path : "/",
       component : Layout,
       children : [
         {
-          path : "",
-          name : "Home",
-          component : () => import("../views/Home.vue"),
+          path : "chatrooms",
+          name : "ChatRooms",
+          component : () => import("../views/ChatRoomList.vue"),
         },
         {
-          path : "/chatroom/:id",
+          path : "chatrooms/:id",
           name : "ChatRoom",
           component : () => import("../views/ChatRoom.vue"),
         },
         {
-          path : "/create-chatroom",
+          path : "create-chatroom",
           name : "CreateChatRoom",
           component : () => import("../views/CreateChatRoom.vue"),
         },

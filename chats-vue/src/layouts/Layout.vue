@@ -9,6 +9,10 @@ const scrollToBottom = () => {
   }
 };
 
+/**
+ * Prop 드릴링 해결
+ * https://ko.vuejs.org/guide/components/provide-inject
+ */
 provide('scrollToBottom', scrollToBottom);
 </script>
 
@@ -16,7 +20,7 @@ provide('scrollToBottom', scrollToBottom);
   <div class="flex flex-col min-h-screen">
     <header class="sticky top-0 pt-32 pb-10 z-20">
       <h1 class="mx-auto text-4xl font-black text-center">
-        <RouterLink to="/" class="blinking">해피서버</RouterLink>
+        <RouterLink :to="{name: 'ChatRooms'}" class="blinking">해피서버</RouterLink>
       </h1>
     </header>
     <main class="flex-1">
