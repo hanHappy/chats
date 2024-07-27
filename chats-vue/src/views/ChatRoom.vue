@@ -1,6 +1,6 @@
 <script setup>
 import {useRoute} from "vue-router";
-import {inject, nextTick, ref} from "vue";
+import {inject, nextTick, onMounted, ref} from "vue";
 import {useUser} from "@/composables/useUser.js";
 
 /**
@@ -8,6 +8,12 @@ import {useUser} from "@/composables/useUser.js";
  * DOM 업데이트 발생을 감지
  * https://ko.vuejs.org/api/general.html#nexttick
  */
+
+onMounted(() => {
+
+  // 채팅 내역 로드
+  fetchChatHistory();
+});
 
 const route = useRoute();
 const roomId = route.params.id;
@@ -19,13 +25,31 @@ const messages = ref([]);
 const myMessage = ref('');
 
 /**
+ * 채팅 내역 로드
+ */
+async function fetchChatHistory() {
+  try {
+    const response = await fetch('http://localhost:8080/api/chat/messages/history/' + roomId);
+
+    if (!response.ok) {
+      throw new Error('오류 발생');
+    }
+    const responseJson = await response.json();
+    messages.value = responseJson.content;
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/**
  * 메시지 발신 핸들러
  */
 const sendMessage = () => {
   const outgoingMessage = {
-    roomId : roomId,
-    content : myMessage.value,
-    senderId : myId,
+    roomId: roomId,
+    content: myMessage.value,
+    senderId: myId,
   }
   stomp.send('/pub/chat/message', {}, JSON.stringify(outgoingMessage))
   myMessage.value = '';
@@ -50,8 +74,8 @@ stomp.connect({}, function () {
     const incomingMessage = JSON.parse(response.body);
 
     messages.value.push({
-      senderId : incomingMessage.senderId,
-      content : incomingMessage.content,
+      senderId: incomingMessage.senderId,
+      content: incomingMessage.content,
     })
 
     nextTick(() => {
@@ -61,8 +85,8 @@ stomp.connect({}, function () {
 
   // 발신
   const outgoingMessage = {
-    roomId : roomId,
-    senderId : myId,
+    roomId: roomId,
+    senderId: myId || '익명의 사용자',
   }
 
   stomp.send('/pub/chat/enter', {}, JSON.stringify(outgoingMessage))
@@ -76,7 +100,7 @@ stomp.connect({}, function () {
     <div class="flex-1 pb-16">
       <div v-for="msg in messages" class="message flex flex-col">
         <div :class="{'self-end': msg.senderId === myId}">
-          <div class="color-2">{{ msg.senderId }}</div>
+          <div class="color-2">{{ msg.senderId || '익명의 사용자' }}</div>
           <div
               class="bg-5 w-fit h-fit p-3 rounded-xl max-w-64 color-2 mt-2">
             {{ msg.content }}
