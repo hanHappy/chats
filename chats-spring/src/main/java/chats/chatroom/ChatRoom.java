@@ -3,6 +3,7 @@ package chats.chatroom;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,12 @@ public class ChatRoom {
 
     @Id
     private String id;
+    private String ownerId;
     private String name;
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
+    private LocalDateTime deletedAt;
+
 
     /**
      * JPA는 Entity를 DB에 저장할 때 객체를 직렬화해야 하는데, WebSocketSession은 JPA Entity가 아니며, 직렬화할 수 없는 객체이다.
