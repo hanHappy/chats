@@ -110,7 +110,7 @@ stomp.connect({}, function () {
     </div>
     <div class="absolute bottom-32 w-full flex gap-2 items-center bg-1">
       <input id="input-message" type="text" placeholder="메시지를 입력해주세요" class="flex-1"
-             v-model="myMessage" @keyup.enter="sendMessage" autocomplete="false">
+             v-model="myMessage" @keyup.enter="sendMessage" autocomplete="off">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
            class="size-8 cursor-pointer color-2 hover" @click="sendMessage">
         <path
