@@ -22,21 +22,12 @@ public class ChatRoomController {
     @GetMapping
     public ResponseEntity<List<ChatRoom>> getAllChatRooms() {
         List<ChatRoom> chatRooms = chatRoomService.getAllChatRooms();
-
-        log.info("[GET] getAllChatRooms : {}", chatRooms);
-
         return ResponseEntity.ok(chatRooms);
     }
 
     @PostMapping
     public ResponseEntity<ChatRoom> createChatRoom(@RequestBody ChatRoom chatRoom) {
-
-        log.info("[POST] ▶▶▶ chatRoom : {}", chatRoom);
-
         ChatRoom newChatRoom = chatRoomService.createChatRoom(chatRoom);
-
-        log.info("[POST] ◀◀◀ chatRoom : {}", chatRoom);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(newChatRoom);
     }
 }

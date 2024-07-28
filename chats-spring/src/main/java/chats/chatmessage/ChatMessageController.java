@@ -25,9 +25,6 @@ public class ChatMessageController {
         @RequestParam(defaultValue = "20") int size
     ) {
 
-        log.info("[GET] getAllChatMessages : {}",
-            chatMessageService.getChatHistory(roomId, page, size));
-
         return ResponseEntity.ok(chatMessageService.getChatHistory(roomId, page, size));
     }
 
