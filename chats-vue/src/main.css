@@ -8,6 +8,7 @@
 
 .color-2 {
   color: #979797;
+  transition: color 0.12s;
 }
 
 .color-2.hover:hover {
@@ -60,10 +61,10 @@ input:focus {
 
 button,
 .button {
-  @apply bg-3 color-4 px-3 h-10 rounded-lg font-bold flex items-center justify-center;
+  @apply bg-3 color-4 px-3 h-10 rounded-lg font-bold flex items-center justify-center transition-all duration-300;
 }
 
 button:hover,
 .button:hover {
-  @apply bg-[#32be81];
+  @apply bg-[#2DB67A];
 }

@@ -10,7 +10,7 @@ const scrollToBottom = () => {
 };
 
 /**
- * Prop 드릴링 해결
+ * Prop 드릴링 해결 (like props)
  * https://ko.vuejs.org/guide/components/provide-inject
  */
 provide('scrollToBottom', scrollToBottom);
@@ -18,9 +18,9 @@ provide('scrollToBottom', scrollToBottom);
 
 <template>
   <div class="flex flex-col min-h-screen">
-    <header class="sticky top-0 pt-32 pb-10 z-20">
-      <h1 class="mx-auto text-4xl font-black text-center">
-        <RouterLink :to="{name: 'ChatRooms'}" class="blinking">해피서버</RouterLink>
+    <header class="sticky top-0 pt-32 pb-10 z-20 flex justify-center">
+      <h1>
+        <RouterLink :to="{name: 'ChatRooms'}" class="blinking">The Forbidden</RouterLink>
       </h1>
     </header>
     <main class="flex-1">
@@ -35,6 +35,8 @@ provide('scrollToBottom', scrollToBottom);
 
 <style scoped>
 
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap');
+
 .no-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
@@ -44,19 +46,44 @@ provide('scrollToBottom', scrollToBottom);
   display: none; /* Chrome, Safari and Opera */
 }
 
-.blinking {
-  animation: blink 1.2s infinite;
+h1 {
+  font-family: 'Uncial Antiqua', cursive;
+  font-size: 2.7rem;
+  text-align: center;
+  white-space: nowrap;
+  font-weight: 900;
+  color: #979797;
+  text-shadow: 3px 3px 2px #3d3d3d;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #979797, #979797);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 1s ease;
+  cursor: pointer;
+  animation: blink 1.5s infinite;
+  /* 텍스트 선택 방지 */
+  -webkit-user-select: none; /* Chrome, Safari, Opera */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+h1:hover {
+  text-shadow: 3px 3px 2px #40D393;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: none;
 }
 
 @keyframes blink {
-  0% {
-    color: #979797;
+  0%, 100% {
+    text-shadow: 3px 3px 2px #3d3d3d;
   }
   50% {
-    color: #3f3f3f;
-  }
-  100% {
-    color: #979797;
+    text-shadow: 3px 3px 2px #979797;
   }
 }
 </style>
