@@ -11,3 +11,8 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
         format_sql: true
+
+# security
+# TODO 환경 변수/암호화 설정 파일 사용
+jwt:
+  secretKey: tH1s1s@nEx@mpl30fA64Ch@r@ct3rL0ngS3cr3tK3yF0rJWTt0k3nG3n3r@t10n
