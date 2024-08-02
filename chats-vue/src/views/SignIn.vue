@@ -6,16 +6,16 @@ import {useRouter} from "vue-router";
 
 const router = useRouter();
 
-const userId = ref();
+const username = ref();
 const password = ref();
 
 const enter = () => {
-  if (!userId) {
+  if (!username) {
     return;
   }
 
-  useUser().setUser(userId);
-  router.push({name: 'ChatRooms'})
+  useUser().setUser(username);
+  router.push({name : 'ChatRooms'})
 }
 </script>
 
@@ -23,7 +23,7 @@ const enter = () => {
   <div class="mt-4">
     <label>
       <span class="color-2">ID</span>
-      <input type="text" class="w-full mt-2" v-model.trim="userId" @keyup.enter="enter" autofocus>
+      <input type="text" class="w-full mt-2" v-model.trim="username" @keyup.enter="enter" autofocus>
     </label>
   </div>
   <div class="mt-4">

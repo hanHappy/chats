@@ -7,7 +7,7 @@ const router = useRouter();
 
 const roomName = ref('');
 
-const userId = useUser().userId;
+const username = useUser().username;
 
 /**
  * 채팅방 생성
@@ -18,19 +18,19 @@ const createChatRoom = async () => {
   }
 
   const newRoom = {
-    name: roomName.value,
-    ownerId: userId.value,
+    name : roomName.value,
+    ownerId : username.value,
   }
 
   console.log('newRoom : ', newRoom);
 
   try {
     const response = await fetch('http://localhost:8080/api/chat/rooms', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+      method : 'POST',
+      headers : {
+        'Content-Type' : 'application/json; charset=UTF-8',
       },
-      body: JSON.stringify(newRoom),
+      body : JSON.stringify(newRoom),
 
     });
 
@@ -39,7 +39,7 @@ const createChatRoom = async () => {
     }
 
     const result = await response.json();
-    await router.push({name: 'ChatRoom', params: {id: result.id}})
+    await router.push({name : 'ChatRoom', params : {id : result.id}})
 
   } catch (error) {
     console.error('Error:', error);

@@ -1,22 +1,22 @@
 import {ref, readonly} from 'vue';
 
-const userId = ref(null);
+const username = ref(null);
 
 export function useUser() {
   const setUser = (id) => {
-    userId.value = id;
+    username.value = id;
   };
 
   const clearUser = () => {
-    userId.value = null;
+    username.value = null;
   };
 
   const isLoggedIn = () => {
-    return !!userId.value;
+    return !!username.value;
   };
 
   return {
-    userId : readonly(userId),
+    username : readonly(username),
     setUser,
     clearUser,
     isLoggedIn,

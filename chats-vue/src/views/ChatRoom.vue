@@ -18,7 +18,7 @@ onMounted(() => {
 const route = useRoute();
 const roomId = route.params.id;
 
-const myId = useUser().userId.value;
+const myId = useUser().username.value;
 
 const messages = ref([]);
 
@@ -47,9 +47,9 @@ async function fetchChatHistory() {
  */
 const sendMessage = () => {
   const outgoingMessage = {
-    roomId: roomId,
-    content: myMessage.value,
-    senderId: myId,
+    roomId : roomId,
+    content : myMessage.value,
+    senderId : myId,
   }
   stomp.send('/pub/chat/message', {}, JSON.stringify(outgoingMessage))
   myMessage.value = '';
@@ -74,8 +74,8 @@ stomp.connect({}, function () {
     const incomingMessage = JSON.parse(response.body);
 
     messages.value.push({
-      senderId: incomingMessage.senderId,
-      content: incomingMessage.content,
+      senderId : incomingMessage.senderId,
+      content : incomingMessage.content,
     })
 
     nextTick(() => {
@@ -85,8 +85,8 @@ stomp.connect({}, function () {
 
   // 발신
   const outgoingMessage = {
-    roomId: roomId,
-    senderId: myId || '익명의 사용자',
+    roomId : roomId,
+    senderId : myId || '익명의 사용자',
   }
 
   stomp.send('/pub/chat/enter', {}, JSON.stringify(outgoingMessage))
