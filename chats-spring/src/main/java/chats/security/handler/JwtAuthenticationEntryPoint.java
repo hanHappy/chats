@@ -12,12 +12,14 @@ import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.stereotype.Component;
 
 /**
  * 다음의 상황에 호출된다. 1. 인증되지 않은 접근 2. JWT 토큰 만료
  *
  * @see chats.config.SecurityConfig#filterChain(HttpSecurity)
  */
+@Component
 @RequiredArgsConstructor
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
