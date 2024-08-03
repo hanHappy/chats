@@ -3,7 +3,6 @@ package chats.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import java.nio.charset.StandardCharsets;
@@ -24,8 +23,7 @@ public class JwtUtil {
     private SecretKey secretKey;
 
     /**
-     * 빈 초기화 시 실행된다. <br/>
-     * SECRET_KEY를 바이트 배열로 변환하여 HMAC-SHA 알고리즘에 사용할 SecretKey 객체를 생성한다.
+     * 빈 초기화 시 실행된다. <br/> SECRET_KEY를 바이트 배열로 변환하여 HMAC-SHA 알고리즘에 사용할 SecretKey 객체를 생성한다.
      */
     @PostConstruct
     public void init() {
@@ -41,11 +39,11 @@ public class JwtUtil {
     public String generateToken(Map<String, Object> claims) {
         long now = System.currentTimeMillis();
         return Jwts.builder()
-                   .claims(claims)
-                   .issuedAt(new Date(now))
-                   .expiration(new Date(now + 1000 * 60 * 60 * 10)) // 10시간
-                   .signWith(secretKey)
-                   .compact();
+            .claims(claims)
+            .issuedAt(new Date(now))
+            .expiration(new Date(now + 1000 * 60 * 60 * 10)) // 10시간
+            .signWith(secretKey)
+            .compact();
     }
 
     /**
@@ -54,7 +52,7 @@ public class JwtUtil {
      * @param token 검증할 JWT 토큰
      * @return 토큰이 유효하면 true, 그렇지 않으면 false
      */
-    public boolean validateToken(String token) {
+    public boolean isTokenValid(String token) {
         try {
             Jwts.parser()
                 .verifyWith(secretKey)
@@ -69,11 +67,8 @@ public class JwtUtil {
     }
 
     /**
-     * 주어진 토큰에서 클레임 정보를 추출한다.
-     * <br/><br/>
-     * 클레임이란?
-     * <br/>
-     * 토큰에 포함된 정보의 조각들로, 사용자 식별, 권한 정보 전달 등의 용도로 사용된다.
+     * 주어진 토큰에서 클레임 정보를 추출한다. <br/><br/> 클레임이란? <br/> 토큰에 포함된 정보의 조각들로, 사용자 식별, 권한 정보 전달 등의 용도로
+     * 사용된다.
      *
      * @param token JWT 토큰
      * @return 토큰에 포함된 클레임 정보
@@ -81,9 +76,9 @@ public class JwtUtil {
      */
     public Claims getClaims(String token) {
         return Jwts.parser()
-                   .verifyWith(secretKey)
-                   .build()
-                   .parseSignedClaims(token)
-                   .getPayload();
+            .verifyWith(secretKey)
+            .build()
+            .parseSignedClaims(token)
+            .getPayload();
     }
 }
