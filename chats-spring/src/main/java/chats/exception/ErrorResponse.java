@@ -11,30 +11,27 @@ public record ErrorResponse(
     String code,
     int status,
     String message,
-    String path,
     LocalDateTime time,
     List<ValidationError> errors
 ) {
 
     // 기본 에러 응답
-    public static ErrorResponse of(ErrorCode errorCode, String path) {
+    public static ErrorResponse of(ErrorCode errorCode) {
         return new ErrorResponse(
             errorCode.getCode(),
             errorCode.getStatus().value(),
             errorCode.getMessage(),
-            path,
             LocalDateTime.now(),
             new ArrayList<>()
         );
     }
 
     // BindingResult 에러 응답
-    public static ErrorResponse of(ErrorCode errorCode, String path, BindingResult bindingResult) {
+    public static ErrorResponse of(ErrorCode errorCode, BindingResult bindingResult) {
         return new ErrorResponse(
             errorCode.getCode(),
             errorCode.getStatus().value(),
             errorCode.getMessage(),
-            path,
             LocalDateTime.now(),
             ValidationError.of(bindingResult)
         );

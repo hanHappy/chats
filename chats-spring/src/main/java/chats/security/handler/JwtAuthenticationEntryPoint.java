@@ -34,8 +34,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(errorCode.getStatus().value());
 
-        chats.exception.ErrorResponse errorResponse = ErrorResponse.of(errorCode,
-            request.getServletPath());
+        chats.exception.ErrorResponse errorResponse = ErrorResponse.of(errorCode);
 
         objectMapper.writeValue(response.getOutputStream(), errorResponse);
     }
