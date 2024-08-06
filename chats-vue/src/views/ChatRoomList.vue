@@ -11,7 +11,8 @@ const fetchChatRooms = async () => {
   try {
     const response = await fetch('http://localhost:8080/api/chat/rooms');
     if (!response.ok) {
-      throw new Error('오류 발생');
+      console.log(response);
+      return;
     }
     chatRooms.value = await response.json();
   } catch (err) {
