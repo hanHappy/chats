@@ -1,8 +1,12 @@
 package chats.user;
 
 
+import chats.constants.UserRole;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,11 +21,17 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "users")
 public class User {
 
     @Id
     private Long id;
     private String username;
     private String password;
-    private String role;
+    /*
+    EnumType.STRING           : DB에 Enum값의 이름(문자열)을 저장한다
+    EnumType.ORDINAL(Default) : DB에 Enum값의 순서(0, 1, ...)를 저장한다
+     */
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 }
