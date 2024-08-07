@@ -2,14 +2,14 @@ import {defineStore} from 'pinia'
 import {HttpStatus} from "@/utils/HttpStatus.js";
 
 export const useUserStore = defineStore('user', {
-  state: () => ({
-    token: null,
-    user: null,
+  state : () => ({
+    token : null,
+    user : null,
   }),
-  getters: {
-    isAuthenticated: (state) => !!state.token,
+  getters : {
+    isAuthenticated : (state) => !!state.token,
   },
-  actions: {
+  actions : {
     setToken(token) {
       this.token = token
       localStorage.setItem('token', token)
@@ -24,12 +24,12 @@ export const useUserStore = defineStore('user', {
     },
     async signUp(credentials) {
       try {
-        const response = await fetch('/api/auth/signup', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const response = await fetch('http://localhost:8080/api/auth/signup', {
+          method : 'POST',
+          headers : {
+            'Content-Type' : 'application/json',
           },
-          body: JSON.stringify(credentials),
+          body : JSON.stringify(credentials),
         });
 
         if (!response.ok) {
@@ -45,6 +45,7 @@ export const useUserStore = defineStore('user', {
           // 예: 자동 로그인이 필요한 경우
           // this.setUser(data);
           // this.setToken(data.token); // 만약 토큰이 반환된다면
+          console.log('response : ', response);
 
           return data;
         } else {
