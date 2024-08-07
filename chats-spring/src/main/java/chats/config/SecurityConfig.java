@@ -49,9 +49,11 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
             .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/auth/**")
+                .permitAll()
                 // .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
             )
             .exceptionHandling(exception -> exception
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -70,6 +72,13 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        // configuration.setAllowCredentials(true);
+        // CORS 프리플라이트 요청의 결과를 캐시하는 시간을 설정
+        // 프리플라이트 요청의 결과를 브라우저가 얼마나 오래 캐시할지 지정
+        // 성능 향상: 캐시 기간 동안 추가 프리플라이트 요청을 하지 않아 네트워크 부하 감소
+        // 응답 시간 개선: 캐시된 정보를 사용해 빠르게 요청 처리 가능
+        configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
