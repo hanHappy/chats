@@ -1,45 +1,80 @@
 <script setup>
 
-import {ref} from "vue";
-import {useUser} from "@/composables/useUser.js";
-import {useRouter} from "vue-router";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { auth } from "@/api/auth.js";
+import { ApiError, UnknownError } from "@/utils/errors.js";
+import { useUserStore } from "@/store/useUserStore.js";
 
 const router = useRouter();
+const userStore = useUserStore();
 
 const username = ref();
 const password = ref();
 
-const enter = () => {
-  if (!username) {
+const errorMessage = ref('');
+
+const signIn = async () => {
+  if (!username.value || !password.value) {
+    alert('아이디와 비밀번호를 모두 입력해주세요.');
     return;
   }
 
-  useUser().setUser(username);
-  router.push({name : 'ChatRooms'})
-}
+  try {
+    const response = await auth.signin({
+      username: username.value,
+      password: password.value,
+    });
+
+    userStore.setToken(response.token);
+
+    return response;
+  } catch (error) {
+    if (error instanceof ApiError) {
+      switch (error.code) {
+        case 'AUTH_001':
+        case 'AUTH_003':
+          errorMessage.value = error.message;
+          break;
+      }
+    } else if (error instanceof UnknownError) {
+      console.error(`Unknown error : Status ${ error.status }, Message ${ error.message }`);
+      alert('알 수 없는 오류가 발생하였습니다. 다시 시도해주세요.');
+      return error;
+    } else {
+      console.error('Unexpected error :', error);
+      alert('예상치 못한 오류가 발생했습니다.');
+      return error;
+    }
+  }
+
+};
+
 </script>
 
 <template>
   <div class="mt-4">
     <label>
       <span class="color-2">ID</span>
-      <input type="text" class="w-full mt-2" v-model.trim="username" @keyup.enter="enter" autofocus>
+      <input type="text" class="w-full mt-2" v-model.trim="username" @keyup.enter="signIn"
+             autofocus>
     </label>
   </div>
   <div class="mt-4">
     <label>
       <span class="color-2">PW</span>
-      <input type="password" class="w-full mt-2" v-model.trim="password" @keyup.enter="enter"
+      <input type="password" class="w-full mt-2" v-model.trim="password" @keyup.enter="signIn"
              autofocus>
     </label>
   </div>
-  <div class="mt-4 flex justify-end">
-    <RouterLink :to="{name: 'SignUp'}" class="color-2 underline underline-offset-4 mr-3 hover">Sign
-      Up
+  <div class="mt-4 flex justify-between">
+    <div class="color-5">{{ errorMessage }}</div>
+    <RouterLink :to="{name: 'SignUp'}" class="color-2 underline underline-offset-4 mr-3 hover">
+      가입
     </RouterLink>
   </div>
   <div class="mt-6">
-    <button class="w-full" @click="enter">Sign In</button>
+    <button class="w-full" @click="signIn">입장</button>
   </div>
 </template>
 
