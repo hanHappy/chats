@@ -77,8 +77,8 @@ public class AuthController {
         User registeredUser = userService.signUp(signUpRequest);
 
         URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-                                                  .path("/api/users/{username}")
-                                                  .buildAndExpand(registeredUser.getUsername())
+                                                  .path("/api/users/{id}")
+                                                  .buildAndExpand(registeredUser.getId())
                                                   .toUri();
 
         return ResponseEntity.created(location)
