@@ -23,8 +23,8 @@ const signUp = async () => {
       password: password.value,
     });
 
-    alert('회원 가입 성공. 로그인해주세요.')
-    router.push({ name: 'SignIn' })
+    alert('가입 성공. 로그인해주세요.')
+    router.push({ name : 'SignIn' })
 
     return response;
   } catch (error) {
@@ -68,7 +68,7 @@ const signUp = async () => {
     <div class="color-5 mt-2 absolute">{{ errorMessage }}</div>
   </div>
   <div class="mt-16">
-    <button class="w-full" @click="signUp">회원 가입</button>
+    <button class="w-full" @click="signUp">가입</button>
   </div>
 </template>
 

@@ -1,10 +1,12 @@
 <script setup>
 
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { auth } from "@/api/auth.js";
-import { ApiError, UnknownError } from "@/utils/errors.js";
-import { useUserStore } from "@/store/useUserStore.js";
+import {ref} from "vue";
+import {useRouter} from "vue-router";
+import {auth} from "@/api/auth.js";
+import {ApiError, UnknownError} from "@/utils/errors.js";
+import {useUserStore} from "@/store/useUserStore.js";
+import {ErrorCode} from "@/constants/ErrorCode.js";
+import {user} from "@/api/user.js";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -28,12 +30,15 @@ const signIn = async () => {
 
     userStore.setToken(response.token);
 
+    const userData = await user.getInfo();
+    userStore.setUser(userData);
+
     return response;
   } catch (error) {
     if (error instanceof ApiError) {
       switch (error.code) {
-        case 'AUTH_001':
-        case 'AUTH_003':
+        case ErrorCode.FORBIDDEN.code:
+        case ErrorCode.INVALID_CREDENTIALS.code:
           errorMessage.value = error.message;
           break;
       }

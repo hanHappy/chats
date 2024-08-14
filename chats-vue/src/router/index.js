@@ -25,9 +25,9 @@ const router = createRouter({
           component: () => import("../views/SignIn.vue"),
         },
         {
-          path: "chatrooms",
-          name: "ChatRooms",
-          component: () => import("../views/ChatRoomList.vue"),
+          path : "",
+          name : "ChatRooms",
+          component : () => import("../views/ChatRoomList.vue"),
         },
         {
           path: "chatrooms/:id",

@@ -1,6 +1,6 @@
-import { defineStore } from 'pinia'
-import { HttpStatus } from "@/utils/HttpStatus.js";
-import { auth } from "@/api/auth.js";
+import {defineStore} from 'pinia'
+import {HttpStatus} from "@/constants/HttpStatus.js";
+import {auth} from "@/api/auth.js";
 
 export const useUserStore = defineStore('user', {
   state: () => ({
