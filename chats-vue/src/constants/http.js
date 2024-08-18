@@ -1,4 +1,4 @@
-export const HttpStatus = {
+export const HTTP_STATUS = {
   OK: 200,
   CREATED: 201,
   NO_CONTENT: 204,
@@ -8,3 +8,10 @@ export const HttpStatus = {
   NOT_FOUND: 404,
   INTERNAL_SERVER_ERROR: 500
 };
+
+export const HTTP_METHOD = {
+  GET: 'GET',
+  POST: 'POST',
+  PUT: 'PUT',
+  DELETE: 'DELETE',
+}

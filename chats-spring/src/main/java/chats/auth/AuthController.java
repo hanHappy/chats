@@ -6,8 +6,7 @@ import chats.auth.dto.SignUpRequest;
 import chats.constants.ErrorCode;
 import chats.exception.ServiceException;
 import chats.security.JwtUtil;
-import chats.user.User;
-import chats.user.UserService;
+import chats.user.model.User;
 import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.HashMap;
@@ -33,7 +32,7 @@ public class AuthController {
 
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
-    private final UserService userService;
+    private final AuthService userService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> signIn(@Valid @RequestBody SignInRequest signinRequest) {

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@ToString
+@ToString(exclude = "password")
 public class SignInRequest {
 
     @NotBlank(message = "ID를 입력해주세요.")

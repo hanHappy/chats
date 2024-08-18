@@ -1,7 +1,6 @@
-package chats.user;
+package chats.user.model;
 
 
-import chats.constants.UserRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,7 +18,7 @@ import lombok.ToString;
 @Entity
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "password")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

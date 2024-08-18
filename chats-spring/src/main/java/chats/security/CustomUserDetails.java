@@ -1,6 +1,6 @@
 package chats.security;
 
-import chats.constants.UserRole;
+import chats.user.model.UserRole;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,10 +22,9 @@ public class CustomUserDetails implements UserDetails {
     /**
      * 권한을 할당할 때 "ROLE_"을 붙이는 이유 :
      * <p>
-     * Spring Security의 {@code @PreAuthorize} 어노테이션이나
-     * {@code hasRole()} 메서드에서는 "ROLE_" 접두사가 자동으로 처리된다.
-     * 이를 통해 권한 검사 시 접두사를 직접 입력할 필요가 없다.
-     * 또한, Spring Security 커뮤니티에서도 이 접두사를 사용하는 것이 일반적인 관례이기도 하다.
+     * Spring Security의 {@code @PreAuthorize} 어노테이션이나 {@code hasRole()} 메서드에서는 "ROLE_" 접두사가 자동으로
+     * 처리된다. 이를 통해 권한 검사 시 접두사를 직접 입력할 필요가 없다. 또한, Spring Security 커뮤니티에서도 이 접두사를 사용하는 것이 일반적인 관례이기도
+     * 하다.
      *
      * @param username 사용자명
      * @param password 비밀번호

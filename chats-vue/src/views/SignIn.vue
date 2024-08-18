@@ -1,12 +1,10 @@
 <script setup>
 
-import {ref} from "vue";
-import {useRouter} from "vue-router";
-import {auth} from "@/api/auth.js";
-import {ApiError, UnknownError} from "@/utils/errors.js";
-import {useUserStore} from "@/store/useUserStore.js";
-import {ErrorCode} from "@/constants/ErrorCode.js";
-import {user} from "@/api/user.js";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { ApiError, UnknownError } from "@/utils/errors.js";
+import { useUserStore } from "@/store/useUserStore.js";
+import { ErrorCode } from "@/constants/errorCode.js";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -23,17 +21,11 @@ const signIn = async () => {
   }
 
   try {
-    const response = await auth.signin({
+    await userStore.signin({
       username: username.value,
-      password: password.value,
+      password: password.value
     });
 
-    userStore.setToken(response.token);
-
-    const userData = await user.getInfo();
-    userStore.setUser(userData);
-
-    return response;
   } catch (error) {
     if (error instanceof ApiError) {
       switch (error.code) {

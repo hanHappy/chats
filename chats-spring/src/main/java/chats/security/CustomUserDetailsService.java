@@ -1,7 +1,7 @@
 package chats.security;
 
-import chats.user.User;
 import chats.user.UserRepository;
+import chats.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username)
-            .orElseThrow(() -> new UsernameNotFoundException(""));
+                                  .orElseThrow(() -> new UsernameNotFoundException(""));
         return new CustomUserDetails(user.getId(), user.getUsername(), user.getPassword(),
             user.getRole());
     }

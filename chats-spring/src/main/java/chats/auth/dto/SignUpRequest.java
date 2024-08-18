@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@ToString
+@ToString(exclude = "password")
 public class SignUpRequest {
 
     private String username;

@@ -1,6 +1,6 @@
-import {defineStore} from 'pinia'
-import {HttpStatus} from "@/constants/HttpStatus.js";
-import {auth} from "@/api/auth.js";
+import { defineStore } from 'pinia'
+import { HTTP_STATUS } from "@/constants/http.js";
+import { api } from "@/api/common.js";
 
 export const useUserStore = defineStore('user', {
   state: () => ({
@@ -9,11 +9,12 @@ export const useUserStore = defineStore('user', {
   }),
   getters: {
     isAuthenticated: (state) => !!state.token,
+    username: (state) => state.user?.username || ''
   },
   actions: {
     setToken(token) {
       this.token = token
-      localStorage.setItem('TOKEN', token)
+      sessionStorage.setItem('JWT', token)
     },
     setUser(user) {
       this.user = user
@@ -21,7 +22,25 @@ export const useUserStore = defineStore('user', {
     logout() {
       this.token = null
       this.user = null
-      localStorage.removeItem('TOKEN')
+      sessionStorage.removeItem('JWT')
+    },
+    async signin(credential) {
+      if (!credential.username || !credential.password) {
+        throw new Error('아이디와 비밀번호를 모두 입력해주세요.');
+      }
+
+      try {
+        const response = await api.auth.signin(credential);
+
+        this.setToken(await response.token);
+
+        const userData = await api.user.getUser(credential.username);
+
+        this.setUser(userData);
+
+      } catch (error) {
+        throw error;
+      }
     },
   },
 })

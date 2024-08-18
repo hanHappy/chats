@@ -2,7 +2,7 @@
 
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { auth } from "@/api/auth.js";
+import { api } from "@/api/common.js";
 import { ApiError, UnknownError } from "@/utils/errors.js";
 
 const router = useRouter();
@@ -18,13 +18,13 @@ const signUp = async () => {
   }
 
   try {
-    const response = await auth.signup({
+    const response = await api.auth.signup({
       username: username.value,
       password: password.value,
     });
 
     alert('가입 성공. 로그인해주세요.')
-    router.push({ name : 'SignIn' })
+    router.push({ name: 'SignIn' })
 
     return response;
   } catch (error) {
