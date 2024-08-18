@@ -1,10 +1,12 @@
 import { ApiError, UnknownError } from "@/utils/errors.js";
 import { authApi } from "@/api/auth.js";
 import { userApi } from "@/api/user.js";
+import { chatroomApi } from "@/api/chatroom.js";
 
 export const api = {
   auth: authApi,
-  user: userApi
+  user: userApi,
+  chatroom: chatroomApi
 }
 
 const BASE_URL = 'http://localhost:8080/api';
@@ -12,7 +14,8 @@ const BASE_URL = 'http://localhost:8080/api';
 export const URL = {
   SIGN_IN: '/auth/signin',
   SIGN_UP: '/auth/signup',
-  USER: '/users'
+  USER: '/users',
+  CHAT_ROOM: '/chat/rooms'
 }
 
 const getHeaders = () => {

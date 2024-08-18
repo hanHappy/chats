@@ -1,5 +1,6 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import { onMounted, ref } from "vue";
+import { api } from "@/api/common.js";
 
 onMounted(() => {
   fetchChatRooms()
@@ -9,12 +10,7 @@ const chatRooms = ref([]);
 
 const fetchChatRooms = async () => {
   try {
-    const response = await fetch('http://localhost:8080/api/chat/rooms');
-    if (!response.ok) {
-      console.log(response);
-      return;
-    }
-    chatRooms.value = await response.json();
+    chatRooms.value = await api.chatroom.getAllChatRooms();
   } catch (err) {
     console.log(err);
   }

@@ -26,6 +26,7 @@ const signIn = async () => {
       password: password.value
     });
 
+    await router.push({ name: 'ChatRooms' })
   } catch (error) {
     if (error instanceof ApiError) {
       switch (error.code) {
