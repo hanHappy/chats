@@ -15,7 +15,8 @@ export const URL = {
   SIGN_IN: '/auth/signin',
   SIGN_UP: '/auth/signup',
   USER: '/users',
-  CHAT_ROOM: '/chat/rooms'
+  CHAT_ROOM: '/chat/rooms',
+  CHAT_MESSAGE: '/chat/messages',
 }
 
 const getHeaders = () => {

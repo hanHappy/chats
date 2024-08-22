@@ -29,7 +29,7 @@ const myMessage = ref('');
  */
 async function fetchChatHistory() {
   try {
-    const response = await fetch('http://localhost:8080/api/chat/messages/history/' + roomId);
+    const response = await fetch(`http://localhost:8080/api/chat/rooms/${roomId}/messages`);
 
     if (!response.ok) {
       throw new Error('오류 발생');
