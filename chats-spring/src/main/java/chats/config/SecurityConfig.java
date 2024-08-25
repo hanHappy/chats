@@ -49,7 +49,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
             .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**")
+                .requestMatchers("/api/auth/**", "/chat/**")
                 .permitAll()
                 // .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest()
@@ -73,7 +73,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
-        // configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(true);
         // CORS 프리플라이트 요청의 결과를 캐시하는 시간을 설정
         // 프리플라이트 요청의 결과를 브라우저가 얼마나 오래 캐시할지 지정
         // 성능 향상: 캐시 기간 동안 추가 프리플라이트 요청을 하지 않아 네트워크 부하 감소
@@ -85,8 +85,7 @@ public class SecurityConfig {
     }
 
     /**
-     * 사용자 인증 처리를 위한 핵심 Interface
-     * 사용자 이름과 비밀번호를 확인하고 인증 토큰 생성
+     * 사용자 인증 처리를 위한 핵심 Interface 사용자 이름과 비밀번호를 확인하고 인증 토큰 생성
      *
      * @return AuthenticationManager 인증 매니저
      */

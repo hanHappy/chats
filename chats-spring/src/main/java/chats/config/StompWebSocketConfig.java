@@ -15,8 +15,8 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     /**
-     * 메시지 브로커 구성 <br/><br/> {@code config.enableSimpleBroker("/pub")} : "/pub"으로 시작하는 목적지로 보내진
-     * 메시지를 처리한다. 예를 들어, 클라이언트가 "/pub/coffees"를 구독하면, 이 주제로 보내진 메시지를 받게 된다. <br/><br/>
+     * 메시지 브로커 구성 <br/><br/> {@code config.enableSimpleBroker("/pub")} : "/pub"으로 시작하는 목적지로 보내진 메시지를
+     * 처리한다. 예를 들어, 클라이언트가 "/pub/coffees"를 구독하면, 이 주제로 보내진 메시지를 받게 된다. <br/><br/>
      * {@code config.setApplicationDestinationPrefixes("/sub")} : 클라이언트에서 서버로 메시지를 보낼 때 사용할 접두사를
      * 지정한다. 이 접두사로 시작하는 메시지는 {@code @MessageMapping}이 붙은 메서드로 라우팅된다. 예를 들어, 클라이언트가 "/sub/coffee"로
      * 메시지를 보내면 서버의 {@code MessageMapping("/hello")} 메서드가 이를 처리한다.
