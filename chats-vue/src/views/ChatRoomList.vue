@@ -10,7 +10,7 @@ const chatRooms = ref([]);
 
 const fetchChatRooms = async () => {
   try {
-    chatRooms.value = await api.chatroom.getAllChatRooms();
+    chatRooms.value = await api.chat.getAllChatRooms();
   } catch (err) {
     console.log(err);
   }

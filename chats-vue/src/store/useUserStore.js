@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { HTTP_STATUS } from "@/constants/http.js";
 import { api } from "@/api/common.js";
 
 export const useUserStore = defineStore('user', {
@@ -12,6 +11,9 @@ export const useUserStore = defineStore('user', {
     username: (state) => state.user?.username || ''
   },
   actions: {
+    getToken() {
+      return `Bearer ${ sessionStorage.getItem('JWT') }`
+    },
     setToken(token) {
       this.token = token
       sessionStorage.setItem('JWT', token)

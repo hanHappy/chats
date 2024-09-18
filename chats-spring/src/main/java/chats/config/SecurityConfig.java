@@ -49,7 +49,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
             .cors((cors) -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**", "/chat/**")
+                .requestMatchers("/api/auth/**", "/ws/**")
                 .permitAll()
                 // .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest()

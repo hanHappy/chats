@@ -1,12 +1,12 @@
 import { ApiError, UnknownError } from "@/utils/errors.js";
 import { authApi } from "@/api/auth.js";
 import { userApi } from "@/api/user.js";
-import { chatroomApi } from "@/api/chatroom.js";
+import { chatApi } from "@/api/chat.js";
 
 export const api = {
   auth: authApi,
   user: userApi,
-  chatroom: chatroomApi
+  chat: chatApi
 }
 
 const BASE_URL = 'http://localhost:8080/api';
@@ -16,10 +16,10 @@ export const URL = {
   SIGN_UP: '/auth/signup',
   USER: '/users',
   CHAT_ROOM: '/chat/rooms',
-  CHAT_MESSAGE: '/chat/messages',
+  CHAT_MESSAGE: (roomId) => `/chat/rooms/${ roomId }/messages`,
 }
 
-const getHeaders = () => {
+const getDefaultHeaders = () => {
   const headers = {
     'Content-Type': 'application/json',
   };
@@ -35,7 +35,7 @@ export async function request(options) {
 
   const config = {
     method,
-    headers: { ...getHeaders(), ...headers },
+    headers: { ...getDefaultHeaders(), ...headers },
   };
 
   if (data) {

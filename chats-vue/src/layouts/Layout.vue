@@ -1,5 +1,5 @@
 <script setup>
-import {ref, provide} from 'vue';
+import { provide, ref } from 'vue';
 
 const messageContainer = ref(null);
 
@@ -10,7 +10,7 @@ const scrollToBottom = () => {
 };
 
 /**
- * Prop 드릴링 해결 (like props)
+ * Prop 드릴링 (like props)
  * https://ko.vuejs.org/guide/components/provide-inject
  */
 provide('scrollToBottom', scrollToBottom);

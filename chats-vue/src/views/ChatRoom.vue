@@ -1,7 +1,10 @@
 <script setup>
-import {useRoute} from "vue-router";
-import {inject, nextTick, onMounted, ref} from "vue";
-import {useUser} from "@/composables/useUser.js";
+import { useRoute } from "vue-router";
+import { inject, nextTick, onMounted, ref } from "vue";
+import { api } from "@/api/common.js";
+import { useUserStore } from "@/store/useUserStore.js";
+import stompConfig from "@/config/stomp.js";
+import appConfig from "../../app.config.js";
 
 /**
  * nextTick()
@@ -13,12 +16,14 @@ onMounted(() => {
 
   // 채팅 내역 로드
   fetchChatHistory();
+
 });
 
 const route = useRoute();
 const roomId = route.params.id;
+const userStore = useUserStore();
 
-const myId = useUser().username.value;
+const myId = userStore.username;
 
 const messages = ref([]);
 
@@ -29,53 +34,54 @@ const myMessage = ref('');
  */
 async function fetchChatHistory() {
   try {
-    const response = await fetch(`http://localhost:8080/api/chat/rooms/${roomId}/messages`);
-
-    if (!response.ok) {
-      throw new Error('오류 발생');
-    }
-    const responseJson = await response.json();
-    messages.value = responseJson.content;
-
+    const response = await api.chat.getChatMessages(roomId);
+    messages.value = response.content;
   } catch (err) {
     console.log(err);
   }
 }
 
 /**
- * 메시지 발신 핸들러
+ * 메시지 발신
  */
 const sendMessage = () => {
   const outgoingMessage = {
-    roomId : roomId,
-    content : myMessage.value,
-    senderId : myId,
+    roomId: roomId,
+    content: myMessage.value,
+    senderId: myId,
   }
-  stomp.send('/pub/chat/message', {}, JSON.stringify(outgoingMessage))
+  stomp.send(`${stompConfig.sendPrefix}/message`, {}, JSON.stringify(outgoingMessage))
   myMessage.value = '';
 }
 
-const scrollToBottom = inject('scrollToBottom');
-
 /**
- * STOMP Connection
+ * FIXME css 사용하여 항상 최하단에 위치하도록 수정
+ * DOM요소가 변할 때 화면 스크롤
+ * @type {function(): void}
  */
-const sockJs = new SockJS("http://localhost:8080/chat");
-const stomp = Stomp.over(sockJs);
-
+const scrollToBottom = inject('scrollToBottom');
 nextTick(() => {
   scrollToBottom();
 });
 
-stomp.connect({}, function () {
+/**
+ * STOMP Connection
+ */
+const sockJs = new SockJS(stompConfig.endpoint);
+const stomp = Stomp.over(sockJs);
+const header = {
+  'Authorization': useUserStore().getToken()
+}
+
+stomp.connect(header, function () {
 
   // 수신
-  stomp.subscribe('/sub/chat/rooms/' + roomId, function (response) {
+  stomp.subscribe(`${stompConfig.listenPrefix}/${ roomId }`, function (response) {
     const incomingMessage = JSON.parse(response.body);
 
     messages.value.push({
-      senderId : incomingMessage.senderId,
-      content : incomingMessage.content,
+      senderId: incomingMessage.senderId,
+      content: incomingMessage.content,
     })
 
     nextTick(() => {
@@ -85,11 +91,11 @@ stomp.connect({}, function () {
 
   // 발신
   const outgoingMessage = {
-    roomId : roomId,
-    senderId : myId || '익명의 사용자',
+    roomId: roomId,
+    senderId: myId || '익명의 사용자',
   }
 
-  stomp.send('/pub/chat/enter', {}, JSON.stringify(outgoingMessage))
+  stomp.send(`${stompConfig.sendPrefix}/enter`, {}, JSON.stringify(outgoingMessage))
 });
 
 
